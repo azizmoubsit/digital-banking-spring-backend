@@ -5,7 +5,6 @@ import org.sid.ebankingbackend.exceptions.BalanceNotSufficientException;
 import org.sid.ebankingbackend.exceptions.BankAccountNotFoundException;
 import org.sid.ebankingbackend.services.BankAccountService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
