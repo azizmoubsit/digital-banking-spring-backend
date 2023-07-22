@@ -2,6 +2,7 @@ package org.sid.ebankingbackend.dtos;
 
 import lombok.Data;
 import org.sid.ebankingbackend.enums.OperationType;
+
 import java.util.Date;
 
 @Data

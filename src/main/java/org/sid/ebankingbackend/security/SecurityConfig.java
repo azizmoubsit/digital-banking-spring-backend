@@ -28,7 +28,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -38,11 +37,11 @@ public class SecurityConfig {
     private String secretKey;
 
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager () {
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         PasswordEncoder passwordEncoder = passwordEncoder();
         return new InMemoryUserDetailsManager(
-                User.withUsername("user1").password(passwordEncoder.encode("123456")).authorities("USER").build(),
-                User.withUsername("admin").password(passwordEncoder.encode("123456")).authorities("USER", "ADMIN").build()
+                User.withUsername("user1").password(passwordEncoder.encode("12345")).authorities("USER").build(),
+                User.withUsername("admin").password(passwordEncoder.encode("12345")).authorities("USER", "ADMIN").build()
         );
     }
 
@@ -54,13 +53,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(s->s.disable())
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(s -> s.disable())
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(ar->ar.requestMatchers("/auth/login/**").permitAll())
-                .authorizeHttpRequests(ar-> ar.anyRequest().authenticated())
+                .authorizeHttpRequests(ar -> ar.requestMatchers("/auth/login/**").permitAll())
+                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
 //                .httpBasic(Customizer.withDefaults())
-                .oauth2ResourceServer(oa->oa.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
                 .build();
     }
 
@@ -84,12 +83,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource(){
+    CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.setExposedHeaders(List.of("x-auth-token"));
+//        corsConfiguration.setExposedHeaders(List.of("x-auth-token"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
